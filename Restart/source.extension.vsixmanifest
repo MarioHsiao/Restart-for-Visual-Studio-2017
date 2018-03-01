@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Restart.08a473b5-5c13-4226-96ad-b4122f9fe9f8" Version="1.0" Language="en-US" Publisher="Mario Hsiao" />
+        <Identity Id="Restart.MarioHsiao.08a473b5-5c13-4226-96ad-b4122f9fe9f8" Version="1.0" Language="en-US" Publisher="Mario Hsiao" />
         <DisplayName>Restart for Visual Studio 2017</DisplayName>
         <Description xml:space="preserve">This extension simplify restarting visual studio with elevated rights reopening the current project or solution.</Description>
+        <MoreInfo>https://github.com/MarioHsiao/Restart-for-Visual-Studio-2017</MoreInfo>
         <Icon>Resources\Restart32.png</Icon>
         <PreviewImage>Resources\Restart200.png</PreviewImage>
     </Metadata>
