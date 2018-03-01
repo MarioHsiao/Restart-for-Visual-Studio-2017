@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h" />
+
+  <Extern href="vsshlids.h" />
+
+  <Include href="KnownImageIds.vsct" />
+
+  <Commands package="guidVSPackage">
+    <Groups>
+
+      <Group guid="guidVSPackageCmdSet" id="MyMenuGroup" priority="0xFEFF">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_FILE" />
+      </Group>
+
+      <Group guid="guidCmdsGroupSet" id="CmdsGroup" priority="0xFEFF">
+        <Parent guid="guidVSPackageCmdSet" id="TopLevelMenu"/>
+      </Group>
+
+    </Groups>
+
+    <Menus>
+      <Menu guid="guidVSPackageCmdSet" id="TopLevelMenu" priority="0x200" type="Menu">
+        <Parent guid="guidVSPackageCmdSet" id="MyMenuGroup" />
+        <Strings>
+          <ButtonText>&amp;Restart</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Buttons>
+
+      <Button guid="guidVSPackageCmdSet" id="RestartId" priority="0x0100" type="Button">
+        <Parent guid="guidVSPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="Restart" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>&amp;Restart</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidCmdsGroupSet" id="RestartId" priority="0x0100" type="Button">
+        <Parent guid="guidCmdsGroupSet" id="CmdsGroup" />
+        <Icon guid="ImageCatalogGuid" id="Restart" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>&amp;Restart</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidCmdsGroupSet" id="RestartAsAdministratorId" priority="0x0100" type="Button">
+        <Parent guid="guidCmdsGroupSet" id="CmdsGroup" />
+        <Icon guid="ImageCatalogGuid" id="Restart" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Restart as &amp;Administrator</ButtonText>
+        </Strings>
+      </Button>
+
+    </Buttons>
+
+  </Commands>
+
+  <KeyBindings>
+    <KeyBinding guid="guidVSPackageCmdSet" id="RestartId" editor="guidVSStd97" mod1="Control Shift" key1="U"/>
+    <KeyBinding guid="guidCmdsGroupSet" id="RestartId" editor="guidVSStd97" mod1="Control" key1="U" mod2="Control" key2="U"/>
+    <KeyBinding guid="guidCmdsGroupSet" id="RestartAsAdministratorId" editor="guidVSStd97" mod1="Control" key1="U" mod2="Control" key2="I"/>
+  </KeyBindings>
+
+  <Symbols>
+    <GuidSymbol name="guidVSPackage" value="{9cd789c3-654b-4ab6-93b9-3dd695a3dfe1}" />
+
+    <GuidSymbol name="guidVSPackageCmdSet" value="{672e8f53-9d48-49fe-9345-ffc862976e52}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="RestartId" value="0x0100" />
+      <IDSymbol name="TopLevelMenu" value="0x0500" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidCmdsGroupSet" value="{07a44644-bd7c-4098-a4db-178d25e59d6b}" >
+      <IDSymbol name="CmdsGroup" value="0x1050" />
+      <IDSymbol name="RestartId" value="0x0100" />
+      <IDSymbol name="RestartAsAdministratorId" value="0x0200" />
+    </GuidSymbol>
+
+  </Symbols>
+</CommandTable>
