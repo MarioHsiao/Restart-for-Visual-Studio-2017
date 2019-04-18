@@ -31,7 +31,7 @@
 
     <Buttons>
 
-      <Button guid="guidVSPackageCmdSet" id="RestartId" priority="0x0100" type="Button">
+      <!--<Button guid="guidVSPackageCmdSet" id="RestartId" priority="0x0100" type="Button">
         <Parent guid="guidVSPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="Restart" />
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -39,25 +39,25 @@
         <Strings>
           <ButtonText>&amp;Restart</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
 
-      <Button guid="guidCmdsGroupSet" id="RestartId" priority="0x0100" type="Button">
+      <Button guid="guidCmdsGroupSet" id="RestartAsUserId" priority="0x0100" type="Button">
         <Parent guid="guidCmdsGroupSet" id="CmdsGroup" />
         <Icon guid="ImageCatalogGuid" id="Restart" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>&amp;Restart</ButtonText>
+          <ButtonText>&amp;Restart in User Mode</ButtonText>
         </Strings>
       </Button>
 
-      <Button guid="guidCmdsGroupSet" id="RestartAsAdministratorId" priority="0x0100" type="Button">
+      <Button guid="guidCmdsGroupSet" id="RestartAsAdministratorId" priority="0x0200" type="Button">
         <Parent guid="guidCmdsGroupSet" id="CmdsGroup" />
         <Icon guid="ImageCatalogGuid" id="Restart" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Restart as &amp;Administrator</ButtonText>
+          <ButtonText>Restart &amp;Elevated</ButtonText>
         </Strings>
       </Button>
 
@@ -67,7 +67,7 @@
 
   <KeyBindings>
     <KeyBinding guid="guidVSPackageCmdSet" id="RestartId" editor="guidVSStd97" mod1="Control Shift" key1="U"/>
-    <KeyBinding guid="guidCmdsGroupSet" id="RestartId" editor="guidVSStd97" mod1="Control" key1="U" mod2="Control" key2="U"/>
+    <KeyBinding guid="guidCmdsGroupSet" id="RestartAsUserId" editor="guidVSStd97" mod1="Control" key1="U" mod2="Control" key2="U"/>
     <KeyBinding guid="guidCmdsGroupSet" id="RestartAsAdministratorId" editor="guidVSStd97" mod1="Control" key1="U" mod2="Control" key2="I"/>
   </KeyBindings>
 
@@ -83,6 +83,7 @@
     <GuidSymbol name="guidCmdsGroupSet" value="{07a44644-bd7c-4098-a4db-178d25e59d6b}" >
       <IDSymbol name="CmdsGroup" value="0x1050" />
       <IDSymbol name="RestartId" value="0x0100" />
+      <IDSymbol name="RestartAsUserId" value="0x0300" />
       <IDSymbol name="RestartAsAdministratorId" value="0x0200" />
     </GuidSymbol>
 

@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Restart
 {
@@ -13,7 +16,7 @@ namespace Restart
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideBindingPath]
-    public sealed class VSPackage : Package
+    public sealed class VSPackage :AsyncPackage
     {
         public const string PackageGuidString = "9cd789c3-654b-4ab6-93b9-3dd695a3dfe1";
 
@@ -23,10 +26,10 @@ namespace Restart
 
         #region Package Members
 
-        protected override void Initialize()
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             base.Initialize();
-            Command.Initialize(this);
+            await Command.InitializeAsync(this);
         }
 
         #endregion

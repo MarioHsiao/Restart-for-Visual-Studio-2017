@@ -2,18 +2,17 @@
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
+using Task = System.Threading.Tasks.Task;
 
 namespace Restart
 {
     internal sealed class Command
     {
         public const int RestartId = 0x0100;
+        public const int RestartAsAdministratorId = 0x0200;
+        public const int RestartAsUserId = 0x0300;
 
         public static readonly Guid CommandSet = new Guid("672e8f53-9d48-49fe-9345-ffc862976e52");
-
-
-        public const int RestartAsAdministratorId = 0x0200;
-
         public static Guid CmdsGroupSet = new Guid("07a44644-bd7c-4098-a4db-178d25e59d6b");
 
         private readonly Package package;
@@ -21,21 +20,30 @@ namespace Restart
         private Command(Package package)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
+        }
 
-            CommandID menuCommandID = new CommandID(CommandSet, RestartId);
-            OleMenuCommand menuItem = new OleMenuCommand(MenuItemCallback, menuCommandID);
-            menuItem.BeforeQueryStatus += OnBeforeQueryStatus;
-            CommandService.AddCommand(menuItem);
+        private async Task InitializeAsync()
+        {
+            await Task.Run(() =>
+            {
 
-            CommandID restartElevatedCommandID = new CommandID(CmdsGroupSet, RestartAsAdministratorId);
-            OleMenuCommand restartElevatedMenuItem = new OleMenuCommand(MenuItemCallback, restartElevatedCommandID);
-            restartElevatedMenuItem.BeforeQueryStatus += OnBeforeQueryStatus;
-            CommandService.AddCommand(restartElevatedMenuItem);
+                CommandID menuCommandID = new CommandID(CommandSet, RestartId);
+                OleMenuCommand menuItem = new OleMenuCommand(MenuItemCallback, menuCommandID);
+                //menuItem.BeforeQueryStatus += OnBeforeQueryStatus;
+                CommandService.AddCommand(menuItem);
 
-            CommandID restartCommandID = new CommandID(CmdsGroupSet, RestartId);
-            OleMenuCommand restartMenuItem = new OleMenuCommand(MenuItemCallback, restartCommandID);
-            restartMenuItem.BeforeQueryStatus += OnBeforeQueryStatus;
-            CommandService.AddCommand(restartMenuItem);
+                CommandID restartElevatedCommandID = new CommandID(CmdsGroupSet, RestartAsAdministratorId);
+                OleMenuCommand restartElevatedMenuItem = new OleMenuCommand(MenuItemCallback, restartElevatedCommandID);
+                //restartElevatedMenuItem.BeforeQueryStatus += OnBeforeQueryStatus;
+                CommandService.AddCommand(restartElevatedMenuItem);
+                restartElevatedMenuItem.Enabled = !IsRunningElevated;
+
+                CommandID restartCommandID = new CommandID(CmdsGroupSet, RestartAsUserId);
+                OleMenuCommand restartMenuItem = new OleMenuCommand(MenuItemCallback, restartCommandID);
+                //restartMenuItem.BeforeQueryStatus += OnBeforeQueryStatus;
+                CommandService.AddCommand(restartMenuItem);
+                restartMenuItem.Enabled = IsRunningElevated;
+            });
         }
 
         private void OnBeforeQueryStatus(object sender, EventArgs e)
@@ -59,22 +67,28 @@ namespace Restart
             get { return package; }
         }
 
-        public static void Initialize(Package package)
+        public static async Task InitializeAsync(Package package)
         {
             Instance = new Command(package);
+            await Instance.InitializeAsync();
         }
 
         private void MenuItemCallback(object sender, EventArgs e)
         {
             OleMenuCommand menuItem = sender as OleMenuCommand;
 
-            if (menuItem.CommandID.ID == RestartId)
+            switch (menuItem.CommandID.ID)
             {
-                Shell4.Restart((uint)__VSRESTARTTYPE.RESTART_Normal);
-            }
-            else if (menuItem.CommandID.ID == RestartAsAdministratorId)
-            {
-                Shell3.RestartElevated();
+                //case RestartId:
+                //    Shell4.Restart((uint)__VSRESTARTTYPE.RESTART_Normal);
+                //    break;
+                case RestartAsAdministratorId:
+                    //Shell3.RestartElevated();
+                    Shell4.Restart((uint)__VSRESTARTTYPE.RESTART_Elevated);
+                    break;
+                default:
+                    Shell4.Restart((uint)__VSRESTARTTYPE.RESTART_Normal);
+                    break;
             }
         }
 
